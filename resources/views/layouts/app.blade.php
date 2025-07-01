@@ -7,12 +7,22 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Goals Management') }}</title>
+    <!--Darkmode loads before others ui-->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js','resources/js/darkmode.js'])
 </head>
 
 <body class=" font-sans antialiased">
@@ -29,7 +39,6 @@
                         </svg>
                     </button>
                 </div>
-
                 {{-- Navigation Content --}}
                 @include('layouts.nav')
             </nav>
